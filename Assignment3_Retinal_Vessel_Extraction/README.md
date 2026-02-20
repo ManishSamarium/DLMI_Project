@@ -89,6 +89,6 @@ python main.py
 ```
 
 ## References
-- DRIVE Dataset: https://drive.grand-challenge.org/
+- DRIVE Dataset: https://www.kaggle.com/datasets/andrewmvd/drive-digital-retinal-images-for-vessel-extraction
 - Niblack, W. (1986). An introduction to digital image processing
 - Sauvola, J., & Pietikäinen, M. (2000). Adaptive document image binarization
