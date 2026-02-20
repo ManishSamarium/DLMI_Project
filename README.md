@@ -54,7 +54,7 @@ pip install opencv-python numpy
 ## Usage
 
 ```bash
-python main.py
+python assignemnt_1_main.py
 ```
 
 The script will process the input image and save results in the `results/` folder.
