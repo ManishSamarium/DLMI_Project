@@ -3,23 +3,23 @@ import cv2
 import numpy as np
 from skimage.filters import threshold_niblack, threshold_sauvola
 
-# -----------------------------
+
 # PATHS
-# -----------------------------
+
 image_folder = "training/images/"
 gt_folder = "training/1st_manual/"
 mask_folder = "training/mask/"
 
-# -----------------------------
+
 # PARAMETERS (tuned for DRIVE)
-# -----------------------------
+
 window_size = 25
 k_niblack = 0.2
 k_sauvola = 0.1
 
-# -----------------------------
+
 # METRIC STORAGE
-# -----------------------------
+
 sens_niblack_list = []
 sens_sauvola_list = []
 
@@ -32,9 +32,9 @@ jacc_sauvola_list = []
 saved_sample = False
 
 
-# -----------------------------
+
 # METRIC FUNCTIONS
-# -----------------------------
+
 def compute_sensitivity(pred, gt):
     tp = np.logical_and(pred, gt).sum()
     fn = np.logical_and(np.logical_not(pred), gt).sum()
@@ -53,9 +53,8 @@ def compute_jaccard(pred, gt):
     return intersection / union if union != 0 else 0
 
 
-# -----------------------------
 # MAIN LOOP
-# -----------------------------
+
 for file in os.listdir(image_folder):
     if file.endswith(".tif"):
 
@@ -82,7 +81,7 @@ for file in os.listdir(image_folder):
         gt = gt > 0
         mask = mask > 0
 
-        # ---------------- NIBLACK ----------------
+        # NIBLACK 
         thresh_n = threshold_niblack(green_blur, window_size, k=k_niblack)
 
         # vessels are dark in DRIVE
@@ -93,7 +92,7 @@ for file in os.listdir(image_folder):
         dice_niblack_list.append(compute_dice(binary_niblack, gt))
         jacc_niblack_list.append(compute_jaccard(binary_niblack, gt))
 
-        # ---------------- SAUVOLA ----------------
+        # SAUVOLA 
         thresh_s = threshold_sauvola(green_blur, window_size, k=k_sauvola)
 
         binary_sauvola = green_blur < thresh_s
@@ -112,17 +111,15 @@ for file in os.listdir(image_folder):
             saved_sample = True
 
 
-# -----------------------------
 # FINAL RESULTS
-# -----------------------------
-print("===================================")
+
+print("")
 print("NIBLACK RESULTS")
 print("Average Sensitivity:", round(np.mean(sens_niblack_list), 4))
 print("Average Dice:", round(np.mean(dice_niblack_list), 4))
 print("Average Jaccard:", round(np.mean(jacc_niblack_list), 4))
-print("-----------------------------------")
+print("")
 print("SAUVOLA RESULTS")
 print("Average Sensitivity:", round(np.mean(sens_sauvola_list), 4))
 print("Average Dice:", round(np.mean(dice_sauvola_list), 4))
 print("Average Jaccard:", round(np.mean(jacc_sauvola_list), 4))
-print("===================================")
