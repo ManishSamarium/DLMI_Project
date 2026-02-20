@@ -40,10 +40,11 @@ env/
 .DS_Store
 Thumbs.db
 
-# Project specific - Large image files
+# Project specific - Large dataset files (not result images)
 training/images/*.tif
 training/1st_manual/*.gif
 training/mask/*.gif
 
-# Output images (can be regenerated)
-result_*.png
+
+
+
