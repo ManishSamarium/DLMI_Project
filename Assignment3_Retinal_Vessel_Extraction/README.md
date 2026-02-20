@@ -65,7 +65,7 @@ pip install opencv-python numpy scikit-image
 
 ### Run
 ```bash
-python main.py
+python Assignment_3_main.py
 ```
 
 ### Output
