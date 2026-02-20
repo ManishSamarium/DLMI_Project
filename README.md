@@ -1,72 +1,41 @@
-# Cell Nuclei Separation using Watershed Segmentation
+# Brain MRI Tumor Segmentation — Otsu vs Sauvola
 
-This project implements cell nuclei separation using the Watershed algorithm in OpenCV. It demonstrates both standard and marker-controlled watershed segmentation techniques for separating overlapping cell nuclei in microscopy images.
+A comparison of Global Otsu and Sauvola adaptive thresholding methods for brain tumor segmentation in MRI slices.
+
+## Task
+Segment tumor regions in brain MRI slices using two thresholding approaches and compare their performance.
+
+## Methods
+- **Global Otsu Thresholding**: Automatically determines optimal global threshold
+- **Sauvola Adaptive Thresholding**: Local adaptive method based on local mean and standard deviation
 
 ## Dataset
-
-The dataset used for this project is from the **Data Science Bowl 2018** competition:
-
-**Dataset Link:** [Data Science Bowl 2018 - Merged Mask](https://www.kaggle.com/datasets/mahmudulhasantasin/data-science-bowl-2018-competition-merged-mask)
-
-## Project Structure
-
+Download the [Brain MRI Tumor Dataset](https://www.kaggle.com/datasets/nikhilroxtomar/brain-tumor-segmentation) from Kaggle and place it in:
 ```
-├── main.py                 # Main script for nuclei separation
-├── README.md               # Project documentation
-├── results/                # Output images
-│   ├── 01_original.png     # Original input image
-│   ├── 02_threshold.png    # Otsu thresholding result
-│   ├── 03_without_markers.png  # Watershed without marker control
-│   └── 04_with_markers.png     # Marker-controlled watershed
-└── dataset/                # Training dataset
+data/
+├── images/
+└── masks/
 ```
-
-## Methods Implemented
-
-### 1. Preprocessing
-- Grayscale conversion
-- Otsu's thresholding for binary segmentation
-- Morphological opening for noise removal
-
-### 2. Watershed without Marker Control
-- Distance transform on the binary image
-- Simple thresholding to find foreground markers
-- Standard watershed segmentation
-
-### 3. Marker-Controlled Watershed
-- Distance transform with higher threshold (0.6x max)
-- Sure foreground and background region identification
-- Unknown region calculation
-- Controlled watershed with proper markers
-
-## Requirements
-
-- Python 3.x
-- OpenCV (`cv2`)
-- NumPy
 
 ## Installation
-
 ```bash
-pip install opencv-python numpy
+pip install numpy opencv-python matplotlib scikit-image tqdm
 ```
 
 ## Usage
-
 ```bash
-python assignemnt_1_main.py
+python assignment_1_main.py
 ```
 
-The script will process the input image and save results in the `results/` folder.
+## Evaluation Metrics
+- **Dice Score**: Measures overlap between predicted and ground truth masks
+- **Jaccard Index (IoU)**: Intersection over Union of predicted and ground truth
 
 ## Results
+| Metric | Otsu | Sauvola |
+|--------|------|---------|
+| Dice Score | 0.0705 | 0.0454 |
+| Jaccard Score | 0.0375 | 0.0236 |
 
-The output includes:
-- Original image
-- Binary threshold image
-- Watershed segmentation without markers (may have over-segmentation)
-- Marker-controlled watershed segmentation (cleaner separation)
-
-## License
-
-This project is for educational purposes as part of the DLMI (Deep Learning for Medical Imaging) course.
+## Learning
+Global Otsu thresholding outperforms Sauvola adaptive thresholding on this dataset. The scores are relatively low because simple intensity thresholding methods struggle with the complex texture and intensity variations in brain MRI images.
