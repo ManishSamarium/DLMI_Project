@@ -1,0 +1,13 @@
+# Dataset (download from Kaggle)
+data/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+
+# IDE
+.vscode/
+.idea/
